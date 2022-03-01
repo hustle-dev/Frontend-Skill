@@ -1,15 +1,18 @@
-import { CounterProps } from './Counter.types';
+import { useCounter } from 'hooks';
+import React from 'react';
 
-export default function Counter({ number, diff, onIncrease, onDecrease, onSetDiff }: CounterProps) {
-  const onChange = (e: any) => {
+export default function Counter() {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onSetDiff(parseInt(e.target.value, 10));
   };
 
+  const { counterData, onIncrease, onDecrease, onSetDiff } = useCounter();
+
   return (
     <div>
-      <h1>{number}</h1>
+      <h1>{counterData.number}</h1>
       <div>
-        <input type="number" value={diff} min="1" onChange={onChange} />
+        <input type="number" value={counterData.diff} min="1" onChange={onChange} />
         <button type="button" onClick={onIncrease}>
           +
         </button>
