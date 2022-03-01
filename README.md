@@ -6,4 +6,12 @@
 
 ### vite-ts-redux
 
-vite 환경을 사용해보고 ts와 같이 redux 사용법을 공부합니다.
+- 환경: vite
+- 언어: ts
+- 공부내용: reudx
+
+### vite-ts-reduxMiddleware
+
+- 환경: vite
+- 언어: ts
+- 공부내용: redux middlware
