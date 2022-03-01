@@ -3,10 +3,8 @@ import { decrease, increase, setDiff } from 'modules/counter';
 import { useDispatch, useSelector } from 'react-redux';
 
 export const useCounter = () => {
-  const { number, diff } = useSelector((state: RootState) => ({
-    number: state.counter.number,
-    diff: state.counter.diff,
-  }));
+  // shallow Equal 사용 혹은 useSelector 여러번 혹은 디스트럭처링 할당
+  const { number, diff } = useSelector((state: RootState) => state.counter);
 
   const dispatch = useDispatch();
   const onIncrease = () => dispatch(increase());

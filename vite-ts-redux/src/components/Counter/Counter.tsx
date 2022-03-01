@@ -2,11 +2,11 @@ import { useCounter } from 'hooks';
 import React from 'react';
 
 export default function Counter() {
+  const { counterData, onIncrease, onDecrease, onSetDiff } = useCounter();
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onSetDiff(parseInt(e.target.value, 10));
   };
-
-  const { counterData, onIncrease, onDecrease, onSetDiff } = useCounter();
 
   return (
     <div>

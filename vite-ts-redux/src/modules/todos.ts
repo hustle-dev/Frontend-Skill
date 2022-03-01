@@ -16,7 +16,7 @@ export const toggleTodo = (id: number) => ({
   payload: id,
 });
 
-type Todo = {
+export type Todo = {
   id: number;
   text: string;
   done: boolean;
