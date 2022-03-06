@@ -18,6 +18,6 @@
 
 ### cra-ts-storybook
 
-- 환경: car
+- 환경: cra
 - 언어: ts
 - 공부내용: storybook
