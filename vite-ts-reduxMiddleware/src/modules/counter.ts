@@ -1,3 +1,5 @@
+import { Action, Dispatch } from 'redux';
+
 // 액션 타입
 const INCREASE = 'INCREASE' as const;
 const DECREASE = 'DECREASE' as const;
@@ -5,6 +7,14 @@ const DECREASE = 'DECREASE' as const;
 // 액션 생성 함수
 export const increase = () => ({ type: INCREASE });
 export const decrease = () => ({ type: DECREASE });
+
+export const increaseAsync = () => (dispatch: Dispatch<Action>) => {
+  setTimeout(() => dispatch(increase()), 1000);
+};
+
+export const decreaseAsync = () => (dispatch: Dispatch<Action>) => {
+  setTimeout(() => dispatch(decrease()), 1000);
+};
 
 // 초기값
 const initialState = 0;
