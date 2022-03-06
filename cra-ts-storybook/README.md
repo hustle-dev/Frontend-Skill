@@ -1,21 +1,36 @@
-# dx
+# cra + ts + storybook
 
-Front-end 툴체인 템플릿
+ts와 같이 storybook 사용법을 공부합니다.
 
-## 사용 방법
+## 접근성 애드온 설치
 
-브런치별 템플릿
+```bash
+yarn add -D @storybook/addon-a11y
+```
 
-- main: create-react-app --typescript template + eslint, prettier
+이후. .storybook의 main.js에 다음과 같이 설정
 
-> 명령어: degit hustle-dev/dx#main
+```
+'@storybook/addon-a11y',
+```
 
-폴더를 넣고 싶다면 뒤에 폴더 이름을 넣으면 됨 -> degit hustle-dev/dx#main folderName
+## 스토리북 a11y 애드온 한국어 설정
 
-- vite/react-ts: vites typescript template
+.storybook/preview.js를 다음과 같이 설정
 
-> 명령어: degit hustle-dev/dx#vite/react-ts <folder>
+```js
+import ko from 'axe-core/locales/ko.json';
 
-- cra/react-ts-storybook: create-react-app --typescript template + eslint, prettier + storybook
-
-> 명령어: degit hustle-dev/dx#cra/react-ts-storybook
+export const parameters = {
+  a11y: {
+    config: { locale: ko },
+  },
+  actions: { argTypesRegex: '^on[A-Z].*' },
+  controls: {
+    matchers: {
+      color: /(background|color)$/i,
+      date: /Date$/,
+    },
+  },
+};
+```

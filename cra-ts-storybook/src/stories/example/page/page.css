@@ -67,3 +67,10 @@ section .tip-wrapper svg {
 section .tip-wrapper svg path {
   fill: #1ea7fd;
 }
+
+code {
+  margin: 0 0.2em;
+  border-radius: 3px;
+  padding: 0.1em 0.2em;
+  background: #eee;
+}
