@@ -15,3 +15,9 @@
 - 환경: vite
 - 언어: ts
 - 공부내용: redux middlware
+
+### cra-ts-storybook
+
+- 환경: car
+- 언어: ts
+- 공부내용: storybook
