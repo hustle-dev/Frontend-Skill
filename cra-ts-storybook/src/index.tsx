@@ -1,11 +1,12 @@
 import { StrictMode } from 'react';
 import { render } from 'react-dom';
+import { GlobalStyle } from 'styles/GlobalStyle';
 import { App } from './components';
 // import './reportWebVitals';
-import './styles/global.css';
 
 render(
   <StrictMode>
+    <GlobalStyle />
     <App />
   </StrictMode>,
   document.getElementById('root'),
