@@ -113,3 +113,121 @@ export default function App({ Component, pageProps }) {
 전역 스타일과 같은 경우 무조건 \_app.js안의 App 컴포넌트가 있는 곳에 임포트가 되어야함(나머지는 불가!)
 
 ## PRACTICE PROJECT
+
+### 패턴
+
+프로젝트에서 사용하는 패턴으로 Layout 패턴이 있다.
+
+> 즉 공통되는 부분들을 Layout 컴포넌트로 만들어 두고, children을 인수로 받아서 사용한다.
+
+이 Layout으로 App컴포넌트를 감싸고 그 안에 컴포넌트를 렌더링하면 공통되는 UI를 보여줄 수 있다.
+
+또한 SEO태그로 next의 Head를 사용할 수 있는데, 이를 가져와서 html의 meta부분을 넣어줄 수 있다.
+
+-> 이 또한 SEO라는 컴포넌트를 만들어서 사용하면 재사용성을 높일 수 있다.
+
+### 데이터 가져오기
+
+next에서 public에 있는 데이터에 접근하려면 경로로 `/vercel.svg` 와 같이 붙여주면 된다.
+
+### 리다이렉트와 리라이트
+
+redirect -> 어느 url로 접속햇을 때 다른 url로 보내줌(url이 변함)
+
+rewrites -> 어느 url로 접속했을 때 redirect를 시키긴 하지만 url이 변하지 않는다.
+
+(url masking을 next.js config에서 할 수 있음)
+
+```js
+  async redirects() {
+    return [
+      {
+        source: '/old-blog/:path*',
+        destination: '/new-sexy-blog/:path*',
+        permanent: false,
+      },
+    ];
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/api/movies',
+        destination: `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`,
+      },
+    ];
+  },
+```
+
+> 다음과 같이 사용하며 API_KEY의 경우 .env 파일안에 작성해두고 꺼내서 사용할 수 있음
+
+### 서버사이드 렌더링
+
+next의 getServerSideProps라는 함수를 통해서 데이터를 다 받아온 이후에 화면에 보여줄지, 아니면 loading 상태를 보여줄지 결정할 수 있음
+
+즉 async getServerSideProps를 통해 데이터가 받아온 이후 렌더링을 해주게 되면 로딩이 필요 없어지게 됨.
+
+-> 이렇게 된다면 데이터를 받기 전까지 유저는 아무것도 볼 수가 없음
+
+여기서 loading을 보여줄지 안보여줄지는 개발자의 마음대로 선택할 수 있음
+
+그렇다면 언제 서버사이드 렌더링을 해야할까? (getServerSideProps)
+
+-> 데이터를 Pre-render할 필요가 있는 경우
+
+그렇지 않은 경우는 client side에서 데이터를 가져오는 것을 고려하자.
+
+### 동적 라우팅
+
+pages안에 `movies/[id].js` 파일을 만들게 되면 앱의 /movies/1234 와 같이 접속을 하면 그 페이지로 이동을 할 수 있다.
+
+-> 편리하게 동적 라우팅을 할 수 있음
+
+### 무비 디테일
+
+무비 디테일로 가는 라우팅을 Link로 감싸서 할 수도 있고, div 에 onClick함수를 설정하여 router.push를 사용하여 navigating 하는 방법이 있음.
+
+또한 그 안에 pathname, query 등을 실어 보낼 수가 있으며, as path속성을 통해 원하는 url만 보이게 할 수 있음
+
+### Catch All
+
+동적 라우팅 말고 뒤에 어떠한 url이 와도 잡아낼 수 있는 방법
+
+[...params].js라는 파일을 만들면 movies/fadsf/asfsdfds 와 같이 아무런 Url이 오더라도 값을 다 잡아낼 수 있다.
+
+```js
+import { useRouter } from 'next/router';
+
+export default function Detail() {
+  const router = useRouter();
+  const [title, id] = router.query.params;
+  return (
+    <div>
+      <h4>{title}</h4>
+    </div>
+  );
+}
+```
+
+> 하지만 단순히 위와 같이 작성하게되면 이는 클라이언트 측에서 url로 접근햇을때, 에러발생! 왜냐하면 이 페이지가 백엔드에서 pre-render 되며, 서버측에서는 `rotuer.query.params`가 존재하지 않는다!
+
+-> 따라서 SEO관점에서는 서버로부터 응답받은 html 파일은 결국 안에 title이 없는 상태로 값이 들어온다.
+
+getServerSideProps를 통해 router안의 값을 받아와 사용한다면 이 부분을 보완할 수 있다.
+
+```js
+export function getServerSideProps({ params: { params } }) {
+  return {
+    props: {
+      params,
+    },
+  };
+}
+```
+
+다음과 같이 값을 받아와서 Detail부분에서 {params} 인수를 전달받아서 사용하자!
+
+마지막으로 SEO 컴포넌트를 불러와서 title을 적용시키면 좋은 SEO를 가질 수 있다.
+
+### 404 Pages
+
+404.js 파일을 만들어 그 안에다가 작성하면 된다.
