@@ -1,5 +1,4 @@
 /* eslint-disable no-undef */
-import logo from './logo.svg';
 import './App.css';
 import { useEffect, useState } from 'react';
 
@@ -39,7 +38,7 @@ function App() {
               {title.length} Characters
             </span>
           </div>
-          <div className='SEOVAlidationFieldValue'>The title of the page</div>
+          <div className='SEOVAlidationFieldValue'>{title}</div>
         </li>
 
         <li className='SEOValidation'>
