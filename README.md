@@ -27,3 +27,15 @@
 - 환경: next.js
 - 언어: js
 - 공부내용: next.js
+
+### chrome-extension
+
+- 환경: react or 순수 js
+- 언어: js
+- 공부내용: 크롬 익스텐션
+
+### web-component
+
+- 환경: 순수 html/css/js
+- 언어: html/css/js
+- 공부내용: 웹 컴포넌트
